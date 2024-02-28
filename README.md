@@ -1,6 +1,6 @@
-# Anansi Markdown
+# Anansi Tags
 
-Apply simple tags to Python strings to get ANSI
+Apply simple BBCode-like tags to Python strings to get ANSI
 
 _No frills.  No dependencies.  Just strings!_
 
@@ -9,7 +9,7 @@ _No frills.  No dependencies.  Just strings!_
 ## Installation
 
 ```shell
-pip install anansi-md
+pip install anansi-tags
 ```
 
 ## Usage
@@ -23,42 +23,42 @@ and forth between ANSI and the custom tags, and even to strip either ANSI or the
 Basic tags can be handled in a nice simple way:
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[bold]Hello world[/bold]'))
+print(parse_tags('[bold]Hello world[/bold]'))
 ```
 
 You can make colored text.  Colored text ("foreground") is cancelled with `/fg`:
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[red]Hello world[/fg]'))
+print(parse_tags('[red]Hello world[/fg]'))
 ```
 
 You can do background colors.  Background colors are cancelled with `/bg`:
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[bg_white]Hello world[/bg]'))
+print(parse_tags('[bg_white]Hello world[/bg]'))
 ```
 
 You can combine any of these to make some super complex tags too:
 **Note:  You can cancel ALL formatting you have added so far with `[/]`!**
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[yellow bg_green italic]Oh god this is unreadable[/]'))
+print(parse_tags('[yellow bg_green italic]Oh god this is unreadable[/]'))
 ```
 
 **Let's get CRAZY**:
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[yellow bg_green italic]Oh god this is [bold]unreadable[/bold /italic under] Please remove[/bg] the colors[/] oh thank you.'))
+print(parse_tags('[yellow bg_green italic]Oh god this is [bold]unreadable[/bold /italic under] Please remove[/bg] the colors[/] oh thank you.'))
 ```
 
 #### Hyperlinks
@@ -66,17 +66,17 @@ print(parse_md('[yellow bg_green italic]Oh god this is [bold]unreadable[/bold /i
 Anansi also supports hyperlinking, as long as your terminal does too:
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[link=https://github.com/3digitdev/anansi-md]Anansi[/link] is a very simple library!'))
+print(parse_tags('[link=https://github.com/3digitdev/anansi-tags]Anansi[/link] is a very simple library!'))
 ```
 
 You can even style hyperlinks!
 
 ```python
-from anansi import parse_md
+from anansi import parse_tags
 
-print(parse_md('[link=https://github.com/3digitdev/anansi-md][bold]Anansi[/][/link] is a very simple library!'))
+print(parse_tags('[link=https://github.com/3digitdev/anansi-tags][bold]Anansi[/][/link] is a very simple library!'))
 ```
 
 **Note:  Remember that you can't combine `link` tags with any other type of tag!  They are incompatible.**
@@ -96,27 +96,27 @@ print(parse_ansi('\x1b[1mHello\x1b[22m'))
 ### Stripping Anansi Tags
 
 ```python
-from anansi import strip_md
+from anansi import strip_tags
 
-print(strip_md('[bold]Hello[/bold]'))
+print(strip_tags('[bold]Hello[/bold]'))
 # Result:  'Hello'
 ```
 
 If you strip a hyperlink, by default it will remove the URL, leaving only the text:
 
 ```python
-from anansi import strip_md
+from anansi import strip_tags
 
-print(strip_md('[link=www.google.com]A link to Google[/link]'))
+print(strip_tags('[link=www.google.com]A link to Google[/link]'))
 # Result:  'A link to Google'
 ```
 
 You can configure this behavior with `keep_url`:
 
 ```python
-from anansi import strip_md
+from anansi import strip_tags
 
-print(strip_md('[link=www.google.com]A link to Google[/link]', keep_url=True))
+print(strip_tags('[link=www.google.com]A link to Google[/link]', keep_url=True))
 # Result:  'www.google.com'
 ```
 
@@ -129,7 +129,7 @@ print(strip_ansi('\x1b[1mHello\x1b[22m'))
 # Result:  'Hello'
 ```
 
-Just like with `strip_md()`, stripping a hyperlink removes the URL, leaving only the text:
+Just like with `strip_tags()`, stripping a hyperlink removes the URL, leaving only the text:
 
 ```python
 from anansi import strip_ansi
@@ -138,7 +138,7 @@ print(strip_ansi('\x1b]8;;www.google.com\x1b\x5cA link to Google\x1b]8;;\x1b\x5c
 # Result:  'A link to Google'
 ```
 
-Also, just like with `strip_md()`, you can tell `strip_ansi()` to only keep the URL:
+Also, just like with `strip_tags()`, you can tell `strip_ansi()` to only keep the URL:
 
 ```python
 from anansi import strip_ansi

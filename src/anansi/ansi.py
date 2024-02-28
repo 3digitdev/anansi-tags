@@ -54,10 +54,10 @@ _LINK_SUFFIX = '\x1b\x5c'
 # Matches all ansi regex tags that are supported in a string
 _ANSI_REGEX = re.compile(r'\x1b\[\d+(;\d*)*m|\x1b]8;;[^\\]*\x1b\x5c')
 # Captures the _formatting codes_ for the ANSI
-_MD_ANSI_BASIC_REGEX = re.compile(r'\x1b\[(\d+(?:;\d*)*)m')
+_TAG_ANSI_BASIC_REGEX = re.compile(r'\x1b\[(\d+(?:;\d*)*)m')
 # Captures the _link ref_ for the ANSI
-_MD_ANSI_LINK_REGEX = re.compile(r'\x1b]8;;([^\\]*)\x1b\x5c')
-_MD_ANSI_LINK_STRIP_REGEX = re.compile(r'\x1b]8;;([^\\]*)\x1b\x5c[^\x1b]*\x1b]8;;\x1b\x5c')
+_TAG_ANSI_LINK_REGEX = re.compile(r'\x1b]8;;([^\\]*)\x1b\x5c')
+_TAG_ANSI_LINK_STRIP_REGEX = re.compile(r'\x1b]8;;([^\\]*)\x1b\x5c[^\x1b]*\x1b]8;;\x1b\x5c')
 _ANSI = {**_OPEN, **_CLOSE}
 
 
@@ -90,11 +90,11 @@ def _parse_links(match: re.Match) -> str:
 
 def strip_ansi(ansi_str: str, keep_url: bool = False) -> str:
     if keep_url:
-        ansi_str = _MD_ANSI_LINK_STRIP_REGEX.sub(r'\1', ansi_str)
+        ansi_str = _TAG_ANSI_LINK_STRIP_REGEX.sub(r'\1', ansi_str)
     return _ANSI_REGEX.sub('', ansi_str)
 
 
 def parse_ansi(ansi_str: str) -> str:
     """Parses a string with ANSI codes and attempts to convert them to markdown"""
-    tagged = _MD_ANSI_BASIC_REGEX.sub(_parse_basic_tags, ansi_str)
-    return _MD_ANSI_LINK_REGEX.sub(_parse_links, tagged)
+    tagged = _TAG_ANSI_BASIC_REGEX.sub(_parse_basic_tags, ansi_str)
+    return _TAG_ANSI_LINK_REGEX.sub(_parse_links, tagged)

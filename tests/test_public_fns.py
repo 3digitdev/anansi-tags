@@ -1,6 +1,6 @@
 import pytest
 
-from anansi import parse_ansi, parse_md, strip_ansi, strip_md
+from anansi import parse_ansi, parse_tags, strip_ansi, strip_tags
 from tests.conftest import TestString
 
 
@@ -13,12 +13,12 @@ from tests.conftest import TestString
         'multi_tag_close_open',
         'complex',
         'hyperlink',
-        'hyperlink_with_md',
+        'hyperlink_with_tags',
     ],
 )
 def test_parse_ansi(fixture_name: str, request):
     test_entry: TestString = request.getfixturevalue(fixture_name)
-    assert parse_ansi(test_entry.ansi) == test_entry.md, f'Conversion failed for {test_entry.desc}'
+    assert parse_ansi(test_entry.ansi) == test_entry.tags, f'Conversion failed for {test_entry.desc}'
 
 
 @pytest.mark.parametrize(
@@ -30,7 +30,7 @@ def test_parse_ansi(fixture_name: str, request):
         'multi_tag_close_open',
         'complex',
         'hyperlink',
-        'hyperlink_with_md',
+        'hyperlink_with_tags',
     ],
 )
 def test_strip_ansi(fixture_name: str, request):
@@ -52,12 +52,12 @@ def test_strip_ansi_keep_url(hyperlink_keep_url: TestString):
         'multi_tag_close_open',
         'complex',
         'hyperlink',
-        'hyperlink_with_md',
+        'hyperlink_with_tags',
     ],
 )
-def test_parse_md(fixture_name: str, request):
+def test_parse_tags(fixture_name: str, request):
     test_entry: TestString = request.getfixturevalue(fixture_name)
-    actual = parse_md(test_entry.md)
+    actual = parse_tags(test_entry.tags)
     print(f'Actual parsed string: [{actual}]')
     assert actual == test_entry.ansi, f'Conversion failed for {test_entry.desc}'
 
@@ -71,14 +71,14 @@ def test_parse_md(fixture_name: str, request):
         'multi_tag_close_open',
         'complex',
         'hyperlink',
-        'hyperlink_with_md',
+        'hyperlink_with_tags',
     ],
 )
-def test_strip_md(fixture_name: str, request):
+def test_strip_tags(fixture_name: str, request):
     test_entry: TestString = request.getfixturevalue(fixture_name)
-    assert strip_md(test_entry.md) == test_entry.stripped, f'Conversion failed for {test_entry.desc}'
+    assert strip_tags(test_entry.tags) == test_entry.stripped, f'Conversion failed for {test_entry.desc}'
 
 
-def test_strip_md_keep_url(hyperlink_keep_url: TestString):
-    actual = strip_md(hyperlink_keep_url.md, keep_url=True)
+def test_strip_tags_keep_url(hyperlink_keep_url: TestString):
+    actual = strip_tags(hyperlink_keep_url.tags, keep_url=True)
     assert actual == hyperlink_keep_url.stripped, f'Conversion failed for {hyperlink_keep_url.desc}'

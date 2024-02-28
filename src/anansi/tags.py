@@ -19,11 +19,11 @@ def _parse_tags(cmd: re.Match) -> str:
     return f'{_ESC}{";".join(tags)}m'
 
 
-def parse_md(md_str: str) -> str:
-    tags_parsed = _TAG_REGEX.sub(_parse_tags, md_str)
+def parse_tags(tag_str: str) -> str:
+    tags_parsed = _TAG_REGEX.sub(_parse_tags, tag_str)
     return _LINK_REGEX.sub(_parse_link, tags_parsed)
 
 
-def strip_md(line: str, keep_url: bool = False) -> str:
+def strip_tags(line: str, keep_url: bool = False) -> str:
     tagged = _TAG_REGEX.sub('', line)
     return _LINK_REGEX.sub(lambda m: _strip_link(m, keep_url), tagged)

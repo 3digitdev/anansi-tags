@@ -1,6 +1,6 @@
 [project]
-name = "anansi-md"
-description = "ANSI String Creation via Markdown"
+name = "anansi-tags"
+description = "ANSI String Creation via BBCode-like Tags"
 requires-python = ">=3.12"
 dynamic = ["version"]
 authors = [
@@ -19,8 +19,8 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/3digitdev/anansi-md"
-Issues = "https://github.com/3digitdev/anansi-md/issues"
+Homepage = "https://github.com/3digitdev/anansi-tags"
+Issues = "https://github.com/3digitdev/anansi-tags/issues"
 
 
 [project.optional-dependencies]
