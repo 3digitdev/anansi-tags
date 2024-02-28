@@ -1,0 +1,61 @@
+[project]
+name = "anansi-md"
+description = "ANSI String Creation via Markdown"
+requires-python = ">=3.12"
+dynamic = ["version"]
+authors = [
+    {email = "anansi@3digit.dev"}
+]
+maintainers = [
+    {email = "anansi@3digit.dev"}
+]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: MacOS",
+    "Operating System :: Unix",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/3digitdev/anansi-md"
+Issues = "https://github.com/3digitdev/anansi-md/issues"
+
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit >= 3.6.0, < 4",
+    "ruff >= 0.1.14, < 1",
+    "pip-tools >= 7.3.0, < 8",
+    "twine >= 5.0.0, < 6",
+    "pytest >= 8.0.2, < 9"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+
+[tool.hatch.version]
+path = "src/anansi/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+excluse = [
+    "/.DS_STORE",
+    "/.gitignore",
+    "/.pre-commit-config.yaml",
+    "/.python-version",
+    "/.dev-requirements.txt"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/anansi"]
